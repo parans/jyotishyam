@@ -352,20 +352,20 @@ charts = {"D1": D1,
 ############################################################################
 ##                   BIRTH DATA of CURRENT USER                           ##
 ############################################################################
-birthdata = { "DOB"     : { "year"     : 2020,
-                            "month"    : 10,
-                            "day"      : 31
+birthdata = { "DOB"     : { "year"     : 1993,
+                            "month"    : 9,
+                            "day"      : 26
                           },
-              "TOB"     : { "hour"     : 16,  #in 24 hour format
-                            "min"      : 55,
-                            "sec"      : 9
+              "TOB"     : { "hour"     : 20,  #in 24 hour format
+                            "min"      : 00,
+                            "sec"      : 30
                           }, 
-              "POB"     : { "name"     : "Honavar",
-                            "lon"      : 15.4324,     #+ve for North and -ve for south
-                            "lat"      : 75.6380,     #+ve for East and -ve for West
+              "POB"     : { "name"     : "Khanapur",
+                            "lon"      : 15.64,     #+ve for North and -ve for south
+                            "lat"      : 74.51,     #+ve for East and -ve for West
                             "timezone" : +5.5
                           },
-              "name"    : "Shyam Bhat",
+              "name"    : "Mummy",
               "Gender"  : c.MALE,  
               "Comments": "This is Birth data of creator of this software."
             }

@@ -87,7 +87,7 @@ def write_planetsAspectsOnChart_nsc(division, chartSVG):
             py = ppnsc[houseIdx][planetposIdx]["y"]
             #Since all needed properties are computed, Now create the svg entry string for planet
             if(retro == True):
-                Planet_SVGstring = f'''  <text y="{py}" x="{px}" fill="{planetcolour}" text-decoration="underline" class="planet">{symbol}</text>\n'''
+                Planet_SVGstring = f'''  <text y="{py}" x="{px}" fill="{planetcolour}" text-decoration="asterisk" class="planet">{symbol}</text>\n'''
             else:
                 Planet_SVGstring = f'''  <text y="{py}" x="{px}" fill="{planetcolour}" class="planet">{symbol}</text>\n'''
             #write the planet to SVG chart
@@ -110,7 +110,7 @@ def write_planetsOnChart_nsc(division, chartSVG):
             py = ppnsc[houseIdx][planetIdx]["y"]
             #Since all needed properties are computed, Now create the svg entry string for planet
             if(retro == True):
-                Planet_SVGstring = f'''  <text y="{py}" x="{px}" fill="{planetcolour}" text-decoration="underline" class="planet">{symbol}</text>\n'''
+                Planet_SVGstring = f'''  <text y="{py}" x="{px}" fill="{planetcolour}" text-decoration="asterisk" class="planet">*{symbol}</text>\n'''
             else:
                 Planet_SVGstring = f'''  <text y="{py}" x="{px}" fill="{planetcolour}" class="planet">{symbol}</text>\n'''
             #write the planet to SVG chart
@@ -129,8 +129,8 @@ def create_chartSVG(division):
     #SVG chart open section
     chartSVG.write(f'''<svg id="{chartSVGfilename}" height="500" width="500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" charset="utf-16">\n''')
     chartSVG.write('  <style>\n')
-    chartSVG.write('    .sign-num { font: bold 22px sans-serif; }\n')
-    chartSVG.write('    .planet { font: bold 20px sans-serif; }\n')
+    chartSVG.write('    .sign-num { font: bold 15px sans-serif; }\n')
+    chartSVG.write('    .planet { font: bold 17px sans-serif; }\n')
     chartSVG.write('  </style>\n')
     chartSVG.write('  <!-- ********** Chart Diagram ********** -->\n')
 
