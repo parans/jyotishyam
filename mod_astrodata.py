@@ -405,6 +405,47 @@ birthdata2 = { "DOB"     : { "year"     : 1997,
             }
 birthdatas = {}
 
+def charts_instance():
+      asc = dict(lagna_ascendant)
+      sun = dict(lagna_sun)
+      moon = dict(lagna_moon)
+      mars = dict(lagna_mars)
+      mercury = dict(lagna_mercury)
+      jupiter = dict(lagna_jupiter)
+      venus = dict(lagna_venus)
+      saturn = dict(lagna_saturn)
+      rahu = dict(lagna_rahu)
+      ketu = dict(lagna_ketu)
+
+      planets = dict(lagna_planets)
+      planets["Sun"] = sun
+      planets["Moon"] = moon
+      planets["Mars"] = mars
+      planets["Mercury"] = mercury
+      planets["Jupiter"] = jupiter
+      planets["Venus"] = venus
+      planets["Saturn"] = saturn
+      planets["Rahu"] = rahu
+      planets["Ketu"] = ketu
+
+      d1 = dict(D1)
+      d1["ascendant"] = asc
+      d1["planets"] = planets
+
+      charts_template = dict(charts)
+      charts_template["D1"] = d1
+
+      return charts_template
+
+class D1Chart:
+      def __init__(self):
+            ascendant = dict(lagna_ascendant)
+            
+
+class VedicCharts:
+      def __init__(self):
+           d1 = dict(D1) 
+            
 if __name__ == "__main__":
       print(charts)
       

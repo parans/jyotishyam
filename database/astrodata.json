@@ -69,21 +69,16 @@
                 "Aspects": {
                     "planets": [],
                     "houses": [
-                        12,
                         12
                     ],
                     "signs": [
-                        "Pisces",
                         "Pisces"
                     ]
                 },
                 "Aspected-by": [
-                    "Ketu",
                     "Ketu"
                 ],
                 "conjuncts": [
-                    "Mercury",
-                    "Jupiter",
                     "Mercury",
                     "Jupiter"
                 ],
@@ -132,18 +127,13 @@
                 "Aspects": {
                     "planets": [],
                     "houses": [
-                        4,
                         4
                     ],
                     "signs": [
-                        "Cancer",
                         "Cancer"
                     ]
                 },
                 "Aspected-by": [
-                    "Mars",
-                    "Jupiter",
-                    "Ketu",
                     "Mars",
                     "Jupiter",
                     "Ketu"
@@ -195,22 +185,14 @@
                 "Aspects": {
                     "planets": [
                         "Moon",
-                        "Ketu",
-                        "Moon",
                         "Ketu"
                     ],
                     "houses": [
                         10,
                         1,
-                        2,
-                        10,
-                        1,
                         2
                     ],
                     "signs": [
-                        "Capricorn",
-                        "Aries",
-                        "Taurus",
                         "Capricorn",
                         "Aries",
                         "Taurus"
@@ -264,21 +246,16 @@
                 "Aspects": {
                     "planets": [],
                     "houses": [
-                        12,
                         12
                     ],
                     "signs": [
-                        "Pisces",
                         "Pisces"
                     ]
                 },
                 "Aspected-by": [
-                    "Ketu",
                     "Ketu"
                 ],
                 "conjuncts": [
-                    "Sun",
-                    "Jupiter",
                     "Sun",
                     "Jupiter"
                 ],
@@ -328,14 +305,9 @@
                 "Aspects": {
                     "planets": [
                         "Moon",
-                        "Ketu",
-                        "Moon",
                         "Ketu"
                     ],
                     "houses": [
-                        10,
-                        12,
-                        2,
                         10,
                         12,
                         2
@@ -343,19 +315,13 @@
                     "signs": [
                         "Capricorn",
                         "Pisces",
-                        "Taurus",
-                        "Capricorn",
-                        "Pisces",
                         "Taurus"
                     ]
                 },
                 "Aspected-by": [
-                    "Ketu",
                     "Ketu"
                 ],
                 "conjuncts": [
-                    "Sun",
-                    "Mercury",
                     "Sun",
                     "Mercury"
                 ],
@@ -404,20 +370,16 @@
                 "guna": "Rajasika",
                 "Aspects": {
                     "planets": [
-                        "Saturn",
                         "Saturn"
                     ],
                     "houses": [
-                        11,
                         11
                     ],
                     "signs": [
-                        "Aquarius",
                         "Aquarius"
                     ]
                 },
                 "Aspected-by": [
-                    "Saturn",
                     "Saturn"
                 ],
                 "conjuncts": [],
@@ -467,14 +429,9 @@
                 "Aspects": {
                     "planets": [
                         "Venus",
-                        "Rahu",
-                        "Venus",
                         "Rahu"
                     ],
                     "houses": [
-                        1,
-                        5,
-                        8,
                         1,
                         5,
                         8
@@ -482,14 +439,10 @@
                     "signs": [
                         "Aries",
                         "Leo",
-                        "Scorpio",
-                        "Aries",
-                        "Leo",
                         "Scorpio"
                     ]
                 },
                 "Aspected-by": [
-                    "Venus",
                     "Venus"
                 ],
                 "conjuncts": [],
@@ -538,13 +491,9 @@
                 "guna": "Tamasika",
                 "Aspects": {
                     "planets": [
-                        "Ketu",
                         "Ketu"
                     ],
                     "houses": [
-                        12,
-                        2,
-                        4,
                         12,
                         2,
                         4
@@ -552,15 +501,10 @@
                     "signs": [
                         "Pisces",
                         "Taurus",
-                        "Cancer",
-                        "Pisces",
-                        "Taurus",
                         "Cancer"
                     ]
                 },
                 "Aspected-by": [
-                    "Ketu",
-                    "Saturn",
                     "Ketu",
                     "Saturn"
                 ],
@@ -614,17 +558,9 @@
                         "Mercury",
                         "Jupiter",
                         "Rahu",
-                        "Moon",
-                        "Sun",
-                        "Mercury",
-                        "Jupiter",
-                        "Rahu",
                         "Moon"
                     ],
                     "houses": [
-                        6,
-                        8,
-                        10,
                         6,
                         8,
                         10
@@ -632,16 +568,10 @@
                     "signs": [
                         "Virgo",
                         "Scorpio",
-                        "Capricorn",
-                        "Virgo",
-                        "Scorpio",
                         "Capricorn"
                     ]
                 },
                 "Aspected-by": [
-                    "Rahu",
-                    "Mars",
-                    "Jupiter",
                     "Rahu",
                     "Mars",
                     "Jupiter"
@@ -802,158 +732,6 @@
                     "Jupiter",
                     "Rahu"
                 ]
-            },
-            {
-                "planets": [],
-                "house-num": 1,
-                "sign-num": 1,
-                "sign": "Aries",
-                "sign-lord": "Mars",
-                "rashi": "Mesha",
-                "aspect-planets": [
-                    "Mars",
-                    "Saturn"
-                ]
-            },
-            {
-                "planets": [
-                    "Ketu"
-                ],
-                "house-num": 2,
-                "sign-num": 2,
-                "sign": "Taurus",
-                "sign-lord": "Venus",
-                "rashi": "Vrushaba",
-                "aspect-planets": [
-                    "Rahu",
-                    "Mars",
-                    "Jupiter"
-                ]
-            },
-            {
-                "planets": [],
-                "house-num": 3,
-                "sign-num": 3,
-                "sign": "Gemini",
-                "sign-lord": "Mercury",
-                "rashi": "Mithuna",
-                "aspect-planets": []
-            },
-            {
-                "planets": [],
-                "house-num": 4,
-                "sign-num": 4,
-                "sign": "Cancer",
-                "sign-lord": "Moon",
-                "rashi": "Karka",
-                "aspect-planets": [
-                    "Moon",
-                    "Rahu"
-                ]
-            },
-            {
-                "planets": [
-                    "Venus"
-                ],
-                "house-num": 5,
-                "sign-num": 5,
-                "sign": "Leo",
-                "sign-lord": "Sun",
-                "rashi": "Simha",
-                "aspect-planets": [
-                    "Saturn"
-                ]
-            },
-            {
-                "planets": [
-                    "Sun",
-                    "Mercury",
-                    "Jupiter"
-                ],
-                "house-num": 6,
-                "sign-num": 6,
-                "sign": "Virgo",
-                "sign-lord": "Mercury",
-                "rashi": "Kanya",
-                "aspect-planets": [
-                    "Ketu"
-                ]
-            },
-            {
-                "planets": [
-                    "Mars"
-                ],
-                "house-num": 7,
-                "sign-num": 7,
-                "sign": "Libra",
-                "sign-lord": "Venus",
-                "rashi": "Tula",
-                "aspect-planets": []
-            },
-            {
-                "planets": [
-                    "Rahu"
-                ],
-                "house-num": 8,
-                "sign-num": 8,
-                "sign": "Scorpio",
-                "sign-lord": "Mars",
-                "rashi": "Vruschika",
-                "aspect-planets": [
-                    "Ketu",
-                    "Saturn"
-                ]
-            },
-            {
-                "planets": [],
-                "house-num": 9,
-                "sign-num": 9,
-                "sign": "Saggitarius",
-                "sign-lord": "Jupiter",
-                "rashi": "Dhanu",
-                "aspect-planets": []
-            },
-            {
-                "planets": [
-                    "Moon"
-                ],
-                "house-num": 10,
-                "sign-num": 10,
-                "sign": "Capricorn",
-                "sign-lord": "Saturn",
-                "rashi": "Makara",
-                "aspect-planets": [
-                    "Mars",
-                    "Jupiter",
-                    "Ketu"
-                ]
-            },
-            {
-                "planets": [
-                    "Saturn"
-                ],
-                "house-num": 11,
-                "sign-num": 11,
-                "sign": "Aquarius",
-                "sign-lord": "Saturn",
-                "rashi": "Kumbha",
-                "aspect-planets": [
-                    "Venus"
-                ]
-            },
-            {
-                "planets": [],
-                "house-num": 12,
-                "sign-num": 12,
-                "sign": "Pisces",
-                "sign-lord": "Jupiter",
-                "rashi": "Meena",
-                "aspect-planets": [
-                    "Sun",
-                    "Mercury",
-                    "Jupiter",
-                    "Rahu"
-                ]
             }
         ],
         "classifications": {
@@ -962,35 +740,21 @@
                 "Moon",
                 "Mars",
                 "Jupiter",
-                "Venus",
-                "Sun",
-                "Moon",
-                "Mars",
-                "Jupiter",
                 "Venus"
             ],
             "malefics": [
-                "Mercury",
-                "Saturn",
                 "Mercury",
                 "Saturn"
             ],
             "neutral": [],
             "kendra": [
                 "Mars",
-                "Moon",
-                "Mars",
                 "Moon"
             ],
             "trikona": [
-                "Venus",
                 "Venus"
             ],
             "trik": [
-                "Sun",
-                "Mercury",
-                "Jupiter",
-                "Rahu",
                 "Sun",
                 "Mercury",
                 "Jupiter",
@@ -1000,22 +764,12 @@
                 "Sun",
                 "Mercury",
                 "Jupiter",
-                "Saturn",
-                "Sun",
-                "Mercury",
-                "Jupiter",
                 "Saturn"
             ],
             "dharma": [
-                "Venus",
                 "Venus"
             ],
             "artha": [
-                "Ketu",
-                "Sun",
-                "Mercury",
-                "Jupiter",
-                "Moon",
                 "Ketu",
                 "Sun",
                 "Mercury",
@@ -1024,12 +778,9 @@
             ],
             "kama": [
                 "Mars",
-                "Saturn",
-                "Mars",
                 "Saturn"
             ],
             "moksha": [
-                "Rahu",
                 "Rahu"
             ]
         }

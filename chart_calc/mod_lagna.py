@@ -33,7 +33,7 @@ import swisseph as swe
 import mod_astrodata as data
 import generic.mod_constants as c
 import generic.mod_general as gen
-from mod_astrodata import birthdata as bd
+from mod_astrodata import birthdata as bdat
 
 
 
@@ -130,9 +130,11 @@ def Is_Retrograde(jd, planet):
   return (longi[3] < 0) # if speed is negative then its in retro
 
 
-
-
 def update_ascendant(jd, place):
+  update_ascendant(jd, place, data.lagna_ascendant)
+
+
+def update_ascendant(jd, place, lagna_ascendant):
   """Lagna (=ascendant) calculation at any given time & place
      It also updates most of lagna elements data, 
      except lagnesh_sign, lagnesh rashi and lagnesh dispositor"""
@@ -148,30 +150,34 @@ def update_ascendant(jd, place):
   reset_ayanamsa_mode()
   #Updating the data from computed values
   #update position of ascendant
-  data.lagna_ascendant["pos"]["deg"] = coordinates[0]
-  data.lagna_ascendant["pos"]["min"] = coordinates[1]
-  data.lagna_ascendant["pos"]["sec"] = coordinates[2]
-  data.lagna_ascendant["pos"]["dec_deg"] = (nirayana_lagna % 30)
+  lagna_ascendant["pos"]["deg"] = coordinates[0]
+  lagna_ascendant["pos"]["min"] = coordinates[1]
+  lagna_ascendant["pos"]["sec"] = coordinates[2]
+  lagna_ascendant["pos"]["dec_deg"] = (nirayana_lagna % 30)
 
   #update nakshatra related data for ascendant
   nak_pad = nakshatra_pada(nirayana_lagna)
-  data.lagna_ascendant["nakshatra"] = nak_pad[0]
-  data.lagna_ascendant["pada"] = nak_pad[1]
-  data.lagna_ascendant["nak-ruler"] = gen.ruler_of_nakshatra[nak_pad[0]]
-  data.lagna_ascendant["nak-diety"] = gen.diety_of_nakshatra[nak_pad[0]]
+  lagna_ascendant["nakshatra"] = nak_pad[0]
+  lagna_ascendant["pada"] = nak_pad[1]
+  lagna_ascendant["nak-ruler"] = gen.ruler_of_nakshatra[nak_pad[0]]
+  lagna_ascendant["nak-diety"] = gen.diety_of_nakshatra[nak_pad[0]]
 
   #update sign related data for ascendant
-  data.lagna_ascendant["sign"]       = gen.signs[constellation]
-  data.lagna_ascendant["rashi"]      = gen.rashis[constellation]
-  data.lagna_ascendant["lagna-lord"] = gen.signlords[constellation]
-  data.lagna_ascendant["sign-tatva"] = gen.signtatvas[constellation]
+  lagna_ascendant["sign"]       = gen.signs[constellation]
+  lagna_ascendant["rashi"]      = gen.rashis[constellation]
+  lagna_ascendant["lagna-lord"] = gen.signlords[constellation]
+  lagna_ascendant["sign-tatva"] = gen.signtatvas[constellation]
 
   #updating Status of Ascendant
-  data.lagna_ascendant["status"] = c.PARTIAL
+  lagna_ascendant["status"] = c.PARTIAL
 
   return (1 + constellation)
 
+
 def update_planetaryData(jd, place):
+  return
+
+def update_planetaryData(jd, place, db_planet):
   """Computes instantaneous planetary positions
      (i.e., which celestial object lies in which constellation)
      Also gives the nakshatra-pada division
@@ -247,24 +253,28 @@ def update_planetaryData(jd, place):
   return
 
 def compute_lagnaChart():
-  birthday_julien = swe.julday( bd["DOB"]["year"],  #birth year
-                                bd["DOB"]["month"],  #birth month
-                                bd["DOB"]["day"],  #birth day
-                                ((bd["TOB"]["hour"])+ (bd["TOB"]["min"])/60. + (bd["TOB"]["sec"])/3600),  #birth time in float
+  charts_template = data.charts_instance()
+  compute_lagna_Chart(bdat, charts_template)
+
+def compute_lagna_Chart(birthDetails, charts_template):
+  birthday_julien = swe.julday( birthDetails["DOB"]["year"],  #birth year
+                                birthDetails["DOB"]["month"],  #birth month
+                                birthDetails["DOB"]["day"],  #birth day
+                                ((birthDetails["TOB"]["hour"])+ (birthDetails["TOB"]["min"])/60. + (birthDetails["TOB"]["sec"])/3600),  #birth time in float
                               )   #yyyy,mm,dd,time_24hr_format(hh + mm/60 + ss/3600)
   
-  birth_place = Place( bd["POB"]["lon"], #longitude
-                       bd["POB"]["lat"], #lattitude
-                       bd["POB"]["timezone"]  #Timezone
+  birth_place = Place( birthDetails["POB"]["lon"], #longitude
+                       birthDetails["POB"]["lat"], #lattitude
+                       birthDetails["POB"]["timezone"]  #Timezone
                       )
-  lagna = update_ascendant(birthday_julien, birth_place)  #Compute ascendant related data
+  lagna = update_ascendant(birthday_julien, birth_place, charts_template["D1"]["ascendant"])  #Compute ascendant related data
   update_planetaryData(birthday_julien, birth_place)  #Compute navagraha related data
 
   #update miscdata like maasa vaara tithi etc
   gen.update_miscdata(birthday_julien, birth_place, data.charts["user_details"])
 
   #computing benefics, malefics and neutral planets for given lagna
-  gen.compute_BenMalNeu4lagna(lagna,data.D1["classifications"])
+  gen.compute_BenMalNeu4lagna(lagna,D1["classifications"])
 
   #computing lagnesh related data for ascendant - not updated by update_ascendant()
   lagnesh = data.lagna_ascendant["lagna-lord"]  #get lagnesh
@@ -281,22 +291,22 @@ def compute_lagnaChart():
     #updating Status of the planet
     planet["status"] = c.COMPUTED
 
-  gen.update_houses(data.D1)
+  gen.update_houses(D1)
 
   #computing aspects and conjunction planets
-  gen.compute_aspects(data.D1)
-  gen.compute_aspectedby(data.D1)  
-  gen.compute_conjuncts(data.D1) 
+  gen.compute_aspects(D1)
+  gen.compute_aspectedby(D1)  
+  gen.compute_conjuncts(D1) 
 
   #populating the classification part of divisional chart
-  gen.populate_kendraplanets(data.D1) #kendra planets
-  gen.populate_trikonaplanets(data.D1) #trikona planets
-  gen.populate_trikplanets(data.D1) #trik planets
-  gen.populate_upachayaplanets(data.D1) #upachaya planets
-  gen.populate_dharmaplanets(data.D1) #dharma planets
-  gen.populate_arthaplanets(data.D1) #artha planets
-  gen.populate_kamaplanets(data.D1) #kama planets
-  gen.populate_mokshaplanets(data.D1) #moksha planets
+  gen.populate_kendraplanets(D1) #kendra planets
+  gen.populate_trikonaplanets(D1) #trikona planets
+  gen.populate_trikplanets(D1) #trik planets
+  gen.populate_upachayaplanets(D1) #upachaya planets
+  gen.populate_dharmaplanets(D1) #dharma planets
+  gen.populate_arthaplanets(D1) #artha planets
+  gen.populate_kamaplanets(D1) #kama planets
+  gen.populate_mokshaplanets(D1) #moksha planets
 
   return
 
