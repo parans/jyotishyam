@@ -186,10 +186,6 @@ def update_miscdata(jd, place, miscdata):
     miscdata["vaara"] = vaara_names[panchanga.vaara(jd)-1]
 
     miscdata["tithi"] = tithi_names[panchanga.tithi(jd,place)[0] - 1]
-    print(panchanga.jd_to_gregorian(jd))
-    print(place)
-    print(panchanga.tithi(jd,place))
-
     return
 
 def housediff(fromsign, tosign):
@@ -218,7 +214,7 @@ def compute_nthsign_backwards(fromsign, n):
 def compute_aspects4planet(planetname,aspectnum,division):
     ''' Computes the aspects of each planet in planet group and 
         updates its Aspects elements - planets, signs and houses '''
-    planetgroup = division["planets"]
+    planetgroup = division.planets
     planet = planetgroup.get(planetname, "NOT_FOUND")
     if (planet != "NOT_FOUND"):
         #if planet is present. Compute its aspects
@@ -227,7 +223,7 @@ def compute_aspects4planet(planetname,aspectnum,division):
         aspecthousenum = compute_nthsign(houseno, aspectnum)
         planet["Aspects"]["houses"].append(aspecthousenum) #nth house aspect
         planet["Aspects"]["signs"].append(signs[compute_nthsign(signno, aspectnum)-1]) #nth sign aspect
-        planets = get_planets_in_house(aspecthousenum, division["planets"])
+        planets = get_planets_in_house(aspecthousenum, division.planets)
         for p in planets:    
             planet["Aspects"]["planets"].append(p)
     else:
@@ -279,21 +275,21 @@ def compute_aspects(division):
 
 def compute_aspectedby(division):
     ''' Computes the aspects on each planet in planet group '''
-    planetgroup = division["planets"]
+    planetgroup = division.planets
     for planetname in planetgroup:
         planet = planetgroup[planetname]    #geteach planet sturcuture
         house_no = planet["house-num"]
-        for p in division["houses"][house_no - 1]["aspect-planets"]:
+        for p in division.houses[house_no - 1]["aspect-planets"]:
             planet["Aspected-by"].append(p)
     return
 
 def compute_conjuncts(division):
     ''' Computes the conjuncted planets of each planet in planet group '''
-    planetgroup = division["planets"]
+    planetgroup = division.planets
     for planetname in planetgroup:
         planet = planetgroup[planetname]    #geteach planet sturcuture
         house_no = planet["house-num"]
-        for p in division["houses"][house_no - 1]["planets"]:
+        for p in division.houses[house_no - 1]["planets"]:
             planet["conjuncts"].append(p)
         planet["conjuncts"].remove(planetname)
     return
@@ -312,108 +308,108 @@ def compute_BenMalNeu4lagna(lagna, cls):
 def populate_kendraplanets(division):
     #populates the kendra planets in the given chart. Kendra are house 1,4,7,10
     #1st House planets
-    for p in division["houses"][0]["planets"]:
-        division["classifications"]["kendra"].append(p)
+    for p in division.houses[0]["planets"]:
+        division.classifications["kendra"].append(p)
     #4th House planets
-    for p in division["houses"][3]["planets"]:
-        division["classifications"]["kendra"].append(p)
+    for p in division.houses[3]["planets"]:
+        division.classifications["kendra"].append(p)
     #7th House planets
-    for p in division["houses"][6]["planets"]:
-        division["classifications"]["kendra"].append(p)
+    for p in division.houses[6]["planets"]:
+        division.classifications["kendra"].append(p)
     #10th House planets
-    for p in division["houses"][9]["planets"]:
-        division["classifications"]["kendra"].append(p)
+    for p in division.houses[9]["planets"]:
+        division.classifications["kendra"].append(p)
     return
 
 def populate_trikonaplanets(division):
     #populates the trikona planets in the given chart. trikona are house 1,5,9
     #1st House planets
-    for p in division["houses"][0]["planets"]:
-        division["classifications"]["trikona"].append(p)
+    for p in division.houses[0]["planets"]:
+        division.classifications["trikona"].append(p)
     #5th House planets
-    for p in division["houses"][4]["planets"]:
-        division["classifications"]["trikona"].append(p)
+    for p in division.houses[4]["planets"]:
+        division.classifications["trikona"].append(p)
     #9th House planets
-    for p in division["houses"][8]["planets"]:
-        division["classifications"]["trikona"].append(p)
+    for p in division.houses[8]["planets"]:
+        division.classifications["trikona"].append(p)
     return
 
 def populate_trikplanets(division):
     #populates the trik planets in the given chart. trik are house 6,8,12
     #6th House planets
-    for p in division["houses"][5]["planets"]:
-        division["classifications"]["trik"].append(p)
+    for p in division.houses[5]["planets"]:
+        division.classifications["trik"].append(p)
     #8th House planets
-    for p in division["houses"][7]["planets"]:
-        division["classifications"]["trik"].append(p)
+    for p in division.houses[7]["planets"]:
+        division.classifications["trik"].append(p)
     #12th House planets
-    for p in division["houses"][11]["planets"]:
-        division["classifications"]["trik"].append(p)
+    for p in division.houses[11]["planets"]:
+        division.classifications["trik"].append(p)
     return
 
 def populate_upachayaplanets(division):
     #populates the Upachaya planets in the given chart. Upachaya are house 3,6,11
     #3rd House planets
-    for p in division["houses"][2]["planets"]:
-        division["classifications"]["upachaya"].append(p)
+    for p in division.houses[2]["planets"]:
+        division.classifications["upachaya"].append(p)
     #6th House planets
-    for p in division["houses"][5]["planets"]:
-        division["classifications"]["upachaya"].append(p)
+    for p in division.houses[5]["planets"]:
+        division.classifications["upachaya"].append(p)
     #11th House planets
-    for p in division["houses"][10]["planets"]:
-        division["classifications"]["upachaya"].append(p)
+    for p in division.houses[10]["planets"]:
+        division.classifications["upachaya"].append(p)
     return
 
 def populate_dharmaplanets(division):
     #populates the dharma planets in the given chart. dharma are house 1,5,9
     #1st House planets
-    for p in division["houses"][0]["planets"]:
-        division["classifications"]["dharma"].append(p)
+    for p in division.houses[0]["planets"]:
+        division.classifications["dharma"].append(p)
     #5th House planets
-    for p in division["houses"][4]["planets"]:
-        division["classifications"]["dharma"].append(p)
+    for p in division.houses[4]["planets"]:
+        division.classifications["dharma"].append(p)
     #9th House planets
-    for p in division["houses"][8]["planets"]:
-        division["classifications"]["dharma"].append(p)
+    for p in division.houses[8]["planets"]:
+        division.classifications["dharma"].append(p)
     return
 
 def populate_arthaplanets(division):
     #populates the artha planets in the given chart. artha are house 2,6,10
     #2nd House planets
-    for p in division["houses"][1]["planets"]:
-        division["classifications"]["artha"].append(p)
+    for p in division.houses[1]["planets"]:
+        division.classifications["artha"].append(p)
     #6th House planets
-    for p in division["houses"][5]["planets"]:
-        division["classifications"]["artha"].append(p)
+    for p in division.houses[5]["planets"]:
+        division.classifications["artha"].append(p)
     #10th House planets
-    for p in division["houses"][9]["planets"]:
-        division["classifications"]["artha"].append(p)
+    for p in division.houses[9]["planets"]:
+        division.classifications["artha"].append(p)
     return
 
 def populate_kamaplanets(division):
     #populates the kama planets in the given chart. kama are house 3,7,11
     #3rd House planets
-    for p in division["houses"][2]["planets"]:
-        division["classifications"]["kama"].append(p)
+    for p in division.houses[2]["planets"]:
+        division.classifications["kama"].append(p)
     #7th House planets
-    for p in division["houses"][6]["planets"]:
-        division["classifications"]["kama"].append(p)
+    for p in division.houses[6]["planets"]:
+        division.classifications["kama"].append(p)
     #11th House planets
-    for p in division["houses"][10]["planets"]:
-        division["classifications"]["kama"].append(p)
+    for p in division.houses[10]["planets"]:
+        division.classifications["kama"].append(p)
     return
 
 def populate_mokshaplanets(division):
     #populates the moksha planets in the given chart. moksha are house 4,8,12
     #4th House planets
-    for p in division["houses"][3]["planets"]:
-        division["classifications"]["moksha"].append(p)
+    for p in division.houses[3]["planets"]:
+        division.classifications["moksha"].append(p)
     #8th House planets
-    for p in division["houses"][7]["planets"]:
-        division["classifications"]["moksha"].append(p)
+    for p in division.houses[7]["planets"]:
+        division.classifications["moksha"].append(p)
     #12th House planets
-    for p in division["houses"][11]["planets"]:
-        division["classifications"]["moksha"].append(p)
+    for p in division.houses[11]["planets"]:
+        division.classifications["moksha"].append(p)
     return
 
 def get_planets_in_house(houseno, planetgroup):
@@ -444,7 +440,7 @@ def update_houses(division):
                 }        
 
         #get planets sitting in that house
-        planets = get_planets_in_house(housenum, division["planets"])
+        planets = get_planets_in_house(housenum, division.planets)
         for planet in planets:    
             house["planets"].append(planet)
             #house["planet-symbols"].append(division["planets"][planet]["symbol"])
@@ -455,7 +451,7 @@ def update_houses(division):
         house["house-num"] = housenum
 
         #get sign of the house
-        mysignnum = compute_nthsign(signnum(division["ascendant"]["sign"]),housenum)
+        mysignnum = compute_nthsign(signnum(division.ascendant["sign"]),housenum)
         house["sign-num"] = mysignnum
         house["sign"] = signs[mysignnum - 1]
         house["sign-lord"] = signlords[mysignnum - 1]
@@ -463,50 +459,50 @@ def update_houses(division):
 
         #compute planets which are aspecting this house
         #all planets will have 7th aspect.So add planets in 7th from it
-        planets = get_planets_in_house(compute_nthsign_backwards(housenum,7), division["planets"])
+        planets = get_planets_in_house(compute_nthsign_backwards(housenum,7), division.planets)
         for planet in planets:    
             house["aspect-planets"].append(planet)
         #Mars has 4th aspect. so check if mars is present in 4 house backwards
-        planets = get_planets_in_house(compute_nthsign_backwards(housenum,4), division["planets"])
+        planets = get_planets_in_house(compute_nthsign_backwards(housenum,4), division.planets)
         if ("Mars" in planets):
             house["aspect-planets"].append("Mars")
         #Mars has 8th aspect. so check if mars is present in 8 house backwards
-        planets = get_planets_in_house(compute_nthsign_backwards(housenum,8), division["planets"])
+        planets = get_planets_in_house(compute_nthsign_backwards(housenum,8), division.planets)
         if ("Mars" in planets):
             house["aspect-planets"].append("Mars")
         #Saturn has 3rd aspect. so check if saturn is present in 3 house backwards
-        planets = get_planets_in_house(compute_nthsign_backwards(housenum,3), division["planets"])
+        planets = get_planets_in_house(compute_nthsign_backwards(housenum,3), division.planets)
         if ("Saturn" in planets):
             house["aspect-planets"].append("Saturn")
         #Saturn has 10th aspect. so check if saturn is present in 10 house backwards
-        planets = get_planets_in_house(compute_nthsign_backwards(housenum,10), division["planets"])
+        planets = get_planets_in_house(compute_nthsign_backwards(housenum,10), division.planets)
         if ("Saturn" in planets):
             house["aspect-planets"].append("Saturn")
         #Jupiter has 5th aspect. so check if jupiter is present in 5 house backwards
-        planets = get_planets_in_house(compute_nthsign_backwards(housenum,5), division["planets"])
+        planets = get_planets_in_house(compute_nthsign_backwards(housenum,5), division.planets)
         if ("Jupiter" in planets):
             house["aspect-planets"].append("Jupiter")
         #Jupiter has 9th aspect. so check if jupiter is present in 9 house backwards
-        planets = get_planets_in_house(compute_nthsign_backwards(housenum,9), division["planets"])
+        planets = get_planets_in_house(compute_nthsign_backwards(housenum,9), division.planets)
         if ("Jupiter" in planets):
             house["aspect-planets"].append("Jupiter")
         #Rahu has 5th aspect. so check if Rahu is present in 5 house backwards
-        planets = get_planets_in_house(compute_nthsign_backwards(housenum,5), division["planets"])
+        planets = get_planets_in_house(compute_nthsign_backwards(housenum,5), division.planets)
         if ("Rahu" in planets):
             house["aspect-planets"].append("Rahu")
         #Rahu has 9th aspect. so check if Rahu is present in 9 house backwards
-        planets = get_planets_in_house(compute_nthsign_backwards(housenum,9), division["planets"])
+        planets = get_planets_in_house(compute_nthsign_backwards(housenum,9), division.planets)
         if ("Rahu" in planets):
             house["aspect-planets"].append("Rahu")
         #Ketu has 5th aspect. so check if Ketu is present in 5 house backwards
-        planets = get_planets_in_house(compute_nthsign_backwards(housenum,5), division["planets"])
+        planets = get_planets_in_house(compute_nthsign_backwards(housenum,5), division.planets)
         if ("Ketu" in planets):
             house["aspect-planets"].append("Ketu")
         #Ketu has 9th aspect. so check if Ketu is present in 9 house backwards
-        planets = get_planets_in_house(compute_nthsign_backwards(housenum,9), division["planets"])
+        planets = get_planets_in_house(compute_nthsign_backwards(housenum,9), division.planets)
         if ("Ketu" in planets):
             house["aspect-planets"].append("Ketu")
-        division["houses"].append(house)
+        division.houses.append(house)
     return
 
 if __name__ == "__main__":

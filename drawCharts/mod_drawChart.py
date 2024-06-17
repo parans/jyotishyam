@@ -14,6 +14,9 @@
 from drawCharts.mod_chartPlanetPositions import planetPosition_northSquareClassic as ppnsc
 from drawCharts.mod_chartPlanetPositions import bhavnames, aspectSymbols
 
+import io
+import mod_astrocharts as mdata
+
 chartCfg = {}   #contains all the configurations for drawing chart. Loaded from chartDraw_cfg.json file
 
 
@@ -40,18 +43,18 @@ def draw_classicNorthChartSkeleton(chartSVG):
 
 def write_signnumOnChart_nsc(division, chartSVG):
     chartSVG.write('\n  <!-- ********** Sign Numbers ********** -->\n')
-    chartSVG.write(f'''  <text id ="tan" x="193" y="195" fill="{chartCfg["sign-colour"]}" class="sign-num">{division["houses"][0]["sign-num"]:02}</text>\n''')
-    chartSVG.write(f'''  <text id ="dhan" x="97" y="95" fill="{chartCfg["sign-colour"]}" class="sign-num">{division["houses"][1]["sign-num"]:02}</text>\n''')
-    chartSVG.write(f'''  <text id ="anuj" x="70" y="118" fill="{chartCfg["sign-colour"]}" class="sign-num">{division["houses"][2]["sign-num"]:02}</text>\n''')
-    chartSVG.write(f'''  <text id ="maata" x="170" y="218" fill="{chartCfg["sign-colour"]}" class="sign-num">{division["houses"][3]["sign-num"]:02}</text>\n''')
-    chartSVG.write(f'''  <text id ="santaan" x="75" y="316" fill="{chartCfg["sign-colour"]}" class="sign-num">{division["houses"][4]["sign-num"]:02}</text>\n''')  
-    chartSVG.write(f'''  <text id ="rog" x="97" y="335" fill="{chartCfg["sign-colour"]}" class="sign-num">{division["houses"][5]["sign-num"]:02}</text>\n''')  
-    chartSVG.write(f'''  <text id ="dampathya" x="195" y="240" fill="{chartCfg["sign-colour"]}" class="sign-num">{division["houses"][6]["sign-num"]:02}</text>\n''')  
-    chartSVG.write(f'''  <text id ="aayu" x="296" y="337" fill="{chartCfg["sign-colour"]}" class="sign-num">{division["houses"][7]["sign-num"]:02}</text>\n''')  
-    chartSVG.write(f'''  <text id ="bhagya" x="320" y="318" fill="{chartCfg["sign-colour"]}" class="sign-num">{division["houses"][8]["sign-num"]:02}</text>\n''')  
-    chartSVG.write(f'''  <text id ="karma" x="220" y="218" fill="{chartCfg["sign-colour"]}" class="sign-num">{division["houses"][9]["sign-num"]:02}</text>\n''')  
-    chartSVG.write(f'''  <text id ="laab" x="318" y="118" fill="{chartCfg["sign-colour"]}" class="sign-num">{division["houses"][10]["sign-num"]:02}</text>\n''')  
-    chartSVG.write(f'''  <text id ="karch" x="298" y="98" fill="{chartCfg["sign-colour"]}" class="sign-num">{division["houses"][11]["sign-num"]:02}</text>\n''')
+    chartSVG.write(f'''  <text id ="tan" x="193" y="195" fill="{chartCfg["sign-colour"]}" class="sign-num">{division.houses[0]["sign-num"]:02}</text>\n''')
+    chartSVG.write(f'''  <text id ="dhan" x="97" y="95" fill="{chartCfg["sign-colour"]}" class="sign-num">{division.houses[1]["sign-num"]:02}</text>\n''')
+    chartSVG.write(f'''  <text id ="anuj" x="70" y="118" fill="{chartCfg["sign-colour"]}" class="sign-num">{division.houses[2]["sign-num"]:02}</text>\n''')
+    chartSVG.write(f'''  <text id ="maata" x="170" y="218" fill="{chartCfg["sign-colour"]}" class="sign-num">{division.houses[3]["sign-num"]:02}</text>\n''')
+    chartSVG.write(f'''  <text id ="santaan" x="75" y="316" fill="{chartCfg["sign-colour"]}" class="sign-num">{division.houses[4]["sign-num"]:02}</text>\n''')  
+    chartSVG.write(f'''  <text id ="rog" x="97" y="335" fill="{chartCfg["sign-colour"]}" class="sign-num">{division.houses[5]["sign-num"]:02}</text>\n''')  
+    chartSVG.write(f'''  <text id ="dampathya" x="195" y="240" fill="{chartCfg["sign-colour"]}" class="sign-num">{division.houses[6]["sign-num"]:02}</text>\n''')  
+    chartSVG.write(f'''  <text id ="aayu" x="296" y="337" fill="{chartCfg["sign-colour"]}" class="sign-num">{division.houses[7]["sign-num"]:02}</text>\n''')  
+    chartSVG.write(f'''  <text id ="bhagya" x="320" y="318" fill="{chartCfg["sign-colour"]}" class="sign-num">{division.houses[8]["sign-num"]:02}</text>\n''')  
+    chartSVG.write(f'''  <text id ="karma" x="220" y="218" fill="{chartCfg["sign-colour"]}" class="sign-num">{division.houses[9]["sign-num"]:02}</text>\n''')  
+    chartSVG.write(f'''  <text id ="laab" x="318" y="118" fill="{chartCfg["sign-colour"]}" class="sign-num">{division.houses[10]["sign-num"]:02}</text>\n''')  
+    chartSVG.write(f'''  <text id ="karch" x="298" y="98" fill="{chartCfg["sign-colour"]}" class="sign-num">{division.houses[11]["sign-num"]:02}</text>\n''')
     return
 
 def get_planetColour(planetname, classification):
@@ -74,14 +77,14 @@ def write_planetsAspectsOnChart_nsc(division, chartSVG):
     chartSVG.write('\n  <!-- ********** Planets ********** -->\n')
     for houseIdx in range(0,12):    #for all houses
         chartSVG.write(f'  <!-- Aspects -->\n')
-        for planetname in division["houses"][houseIdx]["aspect-planets"]:
-            planetIdx = division["houses"][houseIdx]["aspect-planets"].index(planetname)
+        for planetname in division.houses[houseIdx]["aspect-planets"]:
+            planetIdx = division.houses[houseIdx]["aspect-planets"].index(planetname)
             #compute index of aspect position as planets present in house occupy first and aspects occupy next positions
-            planetposIdx = planetIdx + len(division["houses"][houseIdx]["planets"])
+            planetposIdx = planetIdx + len(division.houses[houseIdx]["planets"])
             symbol = aspectSymbols[planetname]
-            retro = division["planets"][planetname]["retro"]
+            retro = division.planets[planetname]["retro"]
             #identify the planet colour to be put in chart
-            planetcolour = get_planetColour(planetname, division["classifications"])
+            planetcolour = get_planetColour(planetname, division.classifications)
             #Get planet position co-ordinates x and y on chart svg
             px = ppnsc[houseIdx][planetposIdx]["x"]
             py = ppnsc[houseIdx][planetposIdx]["y"]
@@ -99,12 +102,12 @@ def write_planetsOnChart_nsc(division, chartSVG):
     for houseIdx in range(0,12):    #for all houses
         chartSVG.write(f'  <!-- {bhavnames[houseIdx]} -->\n')
         chartSVG.write(f'  <!-- Planet placements -->\n')
-        for planetname in division["houses"][houseIdx]["planets"]:
-            planetIdx = division["houses"][houseIdx]["planets"].index(planetname)
-            symbol = division["planets"][planetname]["symbol"]
-            retro = division["planets"][planetname]["retro"]
+        for planetname in division.houses[houseIdx]["planets"]:
+            planetIdx = division.houses[houseIdx]["planets"].index(planetname)
+            symbol = division.planets[planetname]["symbol"]
+            retro = division.planets[planetname]["retro"]
             #identify the planet colour to be put in chart
-            planetcolour = get_planetColour(planetname, division["classifications"])
+            planetcolour = get_planetColour(planetname, division.classifications)
             #Get planet position co-ordinates x and y on chart svg
             px = ppnsc[houseIdx][planetIdx]["x"]
             py = ppnsc[houseIdx][planetIdx]["y"]
@@ -117,12 +120,16 @@ def write_planetsOnChart_nsc(division, chartSVG):
             chartSVG.write(Planet_SVGstring)
     return
 
-def create_chartSVG(division):
+def create_chartSVG(D1):
+    division = mdata.D1Chart(D1)
+    create_SVG(division)
+
+def create_SVG(division):
     ''' Creates SVG image of astrology chart as per the chart draw configuration
         with data in division. The divisional chart is mentioned by division and 
         hence named accordingly'''
     # open or create chart file 
-    chartSVGfilename = f'{division["name"]}_chart'
+    chartSVGfilename = f'{division.name}_chart'
     chartSVG = open(f'drawCharts/chart_images/{chartSVGfilename}.svg', 'w',  encoding='utf-16')
 
     #Write the content into the file
@@ -149,3 +156,37 @@ def create_chartSVG(division):
     #close the file
     chartSVG.close()
     return
+
+def gen_SVG(division):
+    ''' Creates SVG image of astrology chart as per the chart draw configuration
+        with data in division. The divisional chart is mentioned by division and 
+        hence named accordingly'''
+    # open or create chart file 
+    chartSVGfilename = f'{division.name}_chart'
+    chartSVG = io.StringIO()
+
+    #Write the content into the file
+    #SVG chart open section
+    chartSVG.write(f'''<svg id="{chartSVGfilename}" height="500" width="500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" charset="utf-16">\n''')
+    chartSVG.write('  <style>\n')
+    chartSVG.write('    .sign-num { font: bold 15px sans-serif; }\n')
+    chartSVG.write('    .planet { font: bold 17px sans-serif; }\n')
+    chartSVG.write('  </style>\n')
+    chartSVG.write('  <!-- ********** Chart Diagram ********** -->\n')
+
+    #create chart for given template
+    if (chartCfg["template"] == "north-square-classic"):
+        draw_classicNorthChartSkeleton(chartSVG)    #Create skeleton
+        write_signnumOnChart_nsc(division, chartSVG)    #Update the sign numbers on chart skeleton
+        write_planetsOnChart_nsc(division, chartSVG)    #Update the planets on chart for every house
+        if(chartCfg["aspect-visibility"] == True):
+            write_planetsAspectsOnChart_nsc(division, chartSVG)
+    
+    #SVG chart End section
+    chartSVG.write('\n  Sorry, your browser does not support inline SVG.\n')
+    chartSVG.write('</svg>\n')
+
+    #close the file
+    res = chartSVG.getvalue()
+    chartSVG.close()
+    return res

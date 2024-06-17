@@ -29,14 +29,18 @@ and lagna(Ascendant)
 """
 
 from collections import namedtuple as struct
+from mod_astrodata import birthdata as bdat
+from mod_astrocharts import BirthDetails
+
+import json
 import swisseph as swe
 import mod_astrodata as data
 import generic.mod_constants as c
 import generic.mod_general as gen
-from mod_astrodata import birthdata as bdat
+import log_utils
 
 
-
+logger = log_utils.getLogger(__name__)
 Date = struct("Date", ["year", "month", "day"])
 Place = struct("Place", ["latitude", "longitude", "timezone"])
 
@@ -174,10 +178,7 @@ def update_ascendant(jd, place, lagna_ascendant):
   return (1 + constellation)
 
 
-def update_planetaryData(jd, place):
-  return
-
-def update_planetaryData(jd, place, db_planet):
+def update_planetaryData(jd, place, planets):
   """Computes instantaneous planetary positions
      (i.e., which celestial object lies in which constellation)
      Also gives the nakshatra-pada division
@@ -200,7 +201,7 @@ def update_planetaryData(jd, place, db_planet):
     coordinates = to_dms(nirayana_long % 30)
     
     #Update the data properly for the planet
-    db_planet = data.lagna_planets[get_planet_name(planet)] #get the proper planet container
+    db_planet = planets[get_planet_name(planet)] #get the proper planet container
     db_planet["retro"] = retro  #retrograde property
 
     #update position of the planet
@@ -253,40 +254,56 @@ def update_planetaryData(jd, place, db_planet):
   return
 
 def compute_lagnaChart():
-  charts_template = data.charts_instance()
-  compute_lagna_Chart(bdat, charts_template)
+  charts_template = data.VedicCharts()
 
-def compute_lagna_Chart(birthDetails, charts_template):
-  birthday_julien = swe.julday( birthDetails["DOB"]["year"],  #birth year
-                                birthDetails["DOB"]["month"],  #birth month
-                                birthDetails["DOB"]["day"],  #birth day
-                                ((birthDetails["TOB"]["hour"])+ (birthDetails["TOB"]["min"])/60. + (birthDetails["TOB"]["sec"])/3600),  #birth time in float
+  bday = BirthDetails.parse_raw(json.dumps(data.birthdata2))
+
+  compute_lagna_Chart(bday, charts_template)
+  
+  division = charts_template.D1
+  data.D1["name"] = division.name
+  data.D1["symbol"] = division.symbol
+  data.D1["ascendant"] = division.ascendant
+  data.D1["planets"] = division.planets
+  data.D1["houses"] = division.houses
+  data.D1["classifications"] = division.classifications
+  
+  data.charts["D1"] = data.D1
+  data.charts["user_details"] = charts_template.user_details
+
+def compute_lagna_Chart(bday: BirthDetails, charts_template):
+  logger.info("useless")
+  birthday_julien = swe.julday( int(bday.date_of_birth.year),  #birth year
+                                int(bday.date_of_birth.month),  #birth month
+                                int(bday.date_of_birth.day),  #birth day
+                                ((int(bday.time_of_birth.hour))+ (int(bday.time_of_birth.min))/60. + (int(bday.time_of_birth.sec))/3600),  #birth time in float
                               )   #yyyy,mm,dd,time_24hr_format(hh + mm/60 + ss/3600)
   
-  birth_place = Place( birthDetails["POB"]["lon"], #longitude
-                       birthDetails["POB"]["lat"], #lattitude
-                       birthDetails["POB"]["timezone"]  #Timezone
+  birth_place = Place( float(bday.place_of_birth.lon), #longitude
+                       float(bday.place_of_birth.lat), #lattitude
+                       float(bday.place_of_birth.timezone)  #Timezone
                       )
-  lagna = update_ascendant(birthday_julien, birth_place, charts_template["D1"]["ascendant"])  #Compute ascendant related data
-  update_planetaryData(birthday_julien, birth_place)  #Compute navagraha related data
+  lagna = update_ascendant(birthday_julien, birth_place, charts_template.D1.ascendant)  #Compute ascendant related data
+  update_planetaryData(birthday_julien, birth_place, charts_template.D1.planets)  #Compute navagraha related data
 
   #update miscdata like maasa vaara tithi etc
-  gen.update_miscdata(birthday_julien, birth_place, data.charts["user_details"])
+  gen.update_miscdata(birthday_julien, birth_place, charts_template.user_details)
 
   #computing benefics, malefics and neutral planets for given lagna
-  gen.compute_BenMalNeu4lagna(lagna,D1["classifications"])
+  gen.compute_BenMalNeu4lagna(lagna,charts_template.D1.classifications)
 
   #computing lagnesh related data for ascendant - not updated by update_ascendant()
-  lagnesh = data.lagna_ascendant["lagna-lord"]  #get lagnesh
-  data.lagna_ascendant["lagnesh-sign"]  = data.lagna_planets[lagnesh]["sign"]  #check the sign of lagnesh
-  data.lagna_ascendant["lagnesh-rashi"] = data.lagna_planets[lagnesh]["rashi"] 
-  data.lagna_ascendant["lagnesh-disp"]  = data.lagna_planets[lagnesh]["dispositor"] 
+  D1 = charts_template.D1
+  lagnesh = D1.ascendant["lagna-lord"]  #get lagnesh
+  D1.ascendant["lagnesh-sign"]  = D1.planets[lagnesh]["sign"]  #check the sign of lagnesh
+  D1.ascendant["lagnesh-rashi"] = D1.planets[lagnesh]["rashi"] 
+  D1.ascendant["lagnesh-disp"]  = D1.planets[lagnesh]["dispositor"] 
   #updating Status of Ascendant
-  data.lagna_ascendant["status"] = c.COMPUTED
+  D1.ascendant["status"] = c.COMPUTED
 
   #computing house related data for planets - not updated by update_planetaryData()
-  for planetname in data.lagna_planets:
-    planet = data.lagna_planets[planetname]
+  for planetname in D1.planets:
+    planet = D1.planets[planetname]
     planet["house-num"] = gen.housediff(lagna, gen.signnum(planet["sign"]))
     #updating Status of the planet
     planet["status"] = c.COMPUTED

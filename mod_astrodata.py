@@ -14,12 +14,13 @@
 # for computing Hindu jataka with sidereal lahiri ayanamsha technique 
 # using swiss ephemeries
 #
-
-import generic.mod_constants as c
 #from mod_lagna import compute_lagnaChart as updatelagna
 ################ CHARTS ########################
 ##  Lagna Ascendant related data
 ###   LAGNA - ASCENDANT
+
+import generic.mod_constants as c
+
 lagna_ascendant = {"name"        : "Ascendant",
                   "symbol"       : "Asc",
                   "pos"          : {"deg" : 0, "min" : 0, "sec" : 0, "dec_deg": 0.0}, #initioalized to zero
@@ -352,100 +353,59 @@ charts = {"D1": D1,
 ############################################################################
 ##                   BIRTH DATA of CURRENT USER                           ##
 ############################################################################
-birthdata = { "DOB"     : { "year"     : 1993,
-                            "month"    : 9,
-                            "day"      : 26
+birthdata = { "DateOfBirth"     : { "year"     : "1988",
+                            "month"    : "11",
+                            "day"      : "1"
                           },
-              "TOB"     : { "hour"     : 20,  #in 24 hour format
-                            "min"      : 00,
-                            "sec"      : 30
+              "TimeOfBirth"     : { "hour"     : "17",  #in 24 hour format
+                            "min"      : "7",
+                            "sec"      : "30"
                           }, 
-              "POB"     : { "name"     : "Khanapur",
-                            "lon"      : 15.64,     #+ve for North and -ve for south
-                            "lat"      : 74.51,     #+ve for East and -ve for West
-                            "timezone" : +5.5
+              "PlaceOfBirth"     : { "name"     : "Karkala",
+                            "lon"      : "13.2",     #+ve for North and -ve for south
+                            "lat"      : "74.98",     #+ve for East and -ve for West
+                            "timezone" : "5.5"
                           },
-              "name"    : "Mummy",
-              "Gender"  : c.MALE,  
+              "Name"    : "Saketh",
+              "Gender"  : "Male",  
               "Comments": "This is Birth data of creator of this software."
             }
-birthdata3 = { "DOB"     : { "year"     : 1991,
-                            "month"    : 10,
-                            "day"      : 8
+birthdata3 = { "DateOfBirth"     : { "year"     : "1993",
+                            "month"    : "9",
+                            "day"      : "26"
                           },
-              "TOB"     : { "hour"     : 14,  #in 24 hour format
-                            "min"      : 47,
-                            "sec"      : 9
+              "TimeOfBirth"     : { "hour"     : "20",  #in 24 hour format
+                            "min"      : "0",
+                            "sec"      : "30"
                           }, 
-              "POB"     : { "name"     : "Honavar",
-                            "lon"      : 14.2833,     #+ve for North and -ve for south
-                            "lat"      : 74.45,     #+ve for East and -ve for West
-                            "timezone" : +5.5
+              "PlaceOfBirth"     : { "name"     : "Khanapur",
+                            "lon"      : "15.64",     #+ve for North and -ve for south
+                            "lat"      : "74.51",     #+ve for East and -ve for West
+                            "timezone" : "5.5"
                           },
-              "name"    : "Shyam Bhat",
-              "Gender"  : c.MALE,  
+              "Name"    : "Bhargavi",
+              "Gender"  : "Femail",  
               "Comments": "This is Birth data of creator of this software."
             }
-birthdata2 = { "DOB"     : { "year"     : 1997,
-                            "month"    : 7,
-                            "day"      : 5
+birthdata2 = { "DateOfBirth"     : { "year"     : "1964",
+                            "month"    : "8",
+                            "day"      : "26"
                           },
-              "TOB"     : { "hour"     : 8,  #in 24 hour format
-                            "min"      : 40,
-                            "sec"      : 48
+              "TimeOfBirth"     : { "hour"     : "21",  #in 24 hour format
+                            "min"      : "30",
+                            "sec"      : "30"
                           }, 
-              "POB"     : { "name"     : "kundgol",
-                            "lon"      : 15.2553,     #+ve for North and -ve for south
-                            "lat"      : 75.2475,     #+ve for East and -ve for West
-                            "timezone" : +5.5
+              "PlaceOfBirth"     : { "name"     : "Karkala",
+                            "lon"      : "13.2",     #+ve for North and -ve for south
+                            "lat"      : "74.98",     #+ve for East and -ve for West
+                            "timezone" : "5.5"
                           },
-              "name"    : "Deepa Bhat",
-              "Gender"  : c.FEMALE,  
+              "Name"    : "Mandakini",
+              "Gender"  : "Female",  
               "Comments": "This is Birth data of creator of this software."
             }
 birthdatas = {}
 
-def charts_instance():
-      asc = dict(lagna_ascendant)
-      sun = dict(lagna_sun)
-      moon = dict(lagna_moon)
-      mars = dict(lagna_mars)
-      mercury = dict(lagna_mercury)
-      jupiter = dict(lagna_jupiter)
-      venus = dict(lagna_venus)
-      saturn = dict(lagna_saturn)
-      rahu = dict(lagna_rahu)
-      ketu = dict(lagna_ketu)
-
-      planets = dict(lagna_planets)
-      planets["Sun"] = sun
-      planets["Moon"] = moon
-      planets["Mars"] = mars
-      planets["Mercury"] = mercury
-      planets["Jupiter"] = jupiter
-      planets["Venus"] = venus
-      planets["Saturn"] = saturn
-      planets["Rahu"] = rahu
-      planets["Ketu"] = ketu
-
-      d1 = dict(D1)
-      d1["ascendant"] = asc
-      d1["planets"] = planets
-
-      charts_template = dict(charts)
-      charts_template["D1"] = d1
-
-      return charts_template
-
-class D1Chart:
-      def __init__(self):
-            ascendant = dict(lagna_ascendant)
-            
-
-class VedicCharts:
-      def __init__(self):
-           d1 = dict(D1) 
-            
 if __name__ == "__main__":
       print(charts)
       

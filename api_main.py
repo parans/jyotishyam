@@ -1,34 +1,32 @@
 from fastapi import FastAPI
 from fastapi import Response
-from pydantic import BaseModel
+
 import chart_calc.mod_lagna as mod_lagna
-import mod_astrodata as data
+import drawCharts.mod_drawChart as dc
+import mod_astrocharts as mdata
 import mod_json as js
 import json
+import log_utils
 
 app = FastAPI()
+logger = log_utils.getLogger(__name__)  
 
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
 
-class BirthDetails(BaseModel):
-    name: str
-    dateOfBirth: str
-    timeOfBirth: str
-    place: str
-
-@app.post("/birthChart/")
-async def create_item(item: BirthDetails):
-    mod_lagna.compute_lagnaChart()
-    res = json.dumps(dict(data.charts), indent=4)
+@app.post("/birthChart/details")
+async def chart_details(bday: mdata.BirthDetails):
+    logger.info("Birth details")
+    charts = mdata.VedicCharts()
+    mod_lagna.compute_lagna_Chart(bday, charts)
+    res = json.dumps(charts.to_dict(), indent=4)
     return Response(content=res, media_type="application/json")
 
-@app.get("/birthChart/svg")
-async def chart():
-    mod_lagna.compute_lagnaChart()
-    js.dump_astrodata_injson()
+@app.post("/birthChart/svg")
+async def chart(bday: mdata.BirthDetails):
+    charts = mdata.VedicCharts()
+    mod_lagna.compute_lagna_Chart(bday, charts)
     js.load_drawChartConfig()
-    chartSVGfilename = f'{data.D1["name"]}_chart'
-    res = open(f'drawCharts/chart_images/{chartSVGfilename}.svg', 'r',  encoding='utf-16').read()
-    return Response(content=res, media_type="image/svg+xml")
+    res = dc.gen_SVG(charts.D1)
+    return Response(content=res, media_type="image/svg+xml")  
